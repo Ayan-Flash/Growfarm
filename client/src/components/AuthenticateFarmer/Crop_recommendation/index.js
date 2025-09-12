@@ -1,10 +1,12 @@
 import style from "./style.css"
 import React, { Component } from 'react'
 import axios from "axios";
+import { motion } from "framer-motion";
 import { Form, Card, ProgressBar } from "react-bootstrap";
 import ReactApexChart from "react-apexcharts";
 import ApexCharts from 'apexcharts'
 import Button from "react-bootstrap/Button";
+import { FaSeedling, FaLeaf, FaThermometerHalf, FaTint } from "react-icons/fa";
 import { useEffect, useState } from 'react';
 import {
 	Container,
@@ -30,6 +32,7 @@ export default function Croprek ()  {
   const [Rain, setRain] = useState("90");
   const [shownCrop, setshownCrop] = useState(false);
   const [showntop5, setshowntop5] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
 
   const handleShow = (crop) => {
@@ -45,7 +48,7 @@ export default function Croprek ()  {
   e.preventDefault();
   console.log(Ph, Nitrogen, Phosphorus, Potassium);
 
-setLoading(true);
+setIsLoading(true);
 setshowntop5(true)
 
   const getCropData = () => {
@@ -56,14 +59,25 @@ const Crops = data.data.Top;
 console.log(data.data.Top[0].Fert)
         setTop5data0(Crops);
         console.warn(Crops)
-        setLoading(false);
+        setIsLoading(false);
       }); 
   };
   getCropData();
   }
   
-  if (loading) {
-    return <p style={{marginTop : "100px"}}>Data is loading...</p>;
+  if (isLoading) {
+    return (
+      <div className="loading-container">
+        <motion.div 
+          className="loading-spinner"
+          animate={{ rotate: 360 }}
+          transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+        >
+          <FaSeedling />
+        </motion.div>
+        <p>Analyzing soil conditions...</p>
+      </div>
+    );
   }
 
 let chartvalue = top5datacrop0.map((i => (i.Prob* 100)))
@@ -75,75 +89,160 @@ let Labalevalue = top5datacrop0.map((i => (i.Crop)))
     return (
       auth ?
       <> 
-       <div className="auth-wrapper" style={{marginTop : "120px"}}>
-        <div className="auth-innerCropre">
-        <h2 style={{textalign :  "center"}}>Crop Recomendation</h2>
-        <form onSubmit={handleSubmit}>
-          <div className="CompdivCropre">
-        <label>City</label>
-         <input
-           // type="email"
-           className="form-control"
-           placeholder="Enter Your City"
-           onChange={ (event) => setCity(event.target.value)}
-         />
-       </div> 
-          <div className="CompdivCropre">
-        <label>Nitrogen</label>
-         <input
-           // type="email"
-           className="form-control"
-           placeholder="Proportion of Nitrogen "
-           onChange={ (event) => setNitrogen(event.target.value)}
-         />
-       </div> 
-          <div className="CompdivCropre">
-        <label>Phosphorus</label>
-         <input
-           // type="email"
-           className="form-control"
-           placeholder="Proportion of Phosphorus"
-           onChange={ (event) => setPhosphorus(event.target.value)}
-         />
-       </div> 
-          <div className="CompdivCropre">
-        <label>Potassium</label>
-         <input
-           // type="email"
-           className="form-control"
-           placeholder="Proportion of Potassium"
-           onChange={ (event) => setPotassium(event.target.value)}
-         />
-       </div> 
-          <div className="CompdivCropre">
-        <label>Ph</label>
-         <input
-           // type="email"
-           className="form-control"
-           placeholder="Ph value"
-           onChange={ (event) => setPh(event.target.value)}
-         />
-       </div> 
-          <div className="CompdivCropre">
-        <label>Rain</label>
-         <input
-           // type="email"
-           className="form-control"
-           placeholder="Rain level"
-           onChange={ (event) => setRain(event.target.value)}
-         />
-       </div> 
-       
-       <div >
-        </div>
-        <Button variant="success" type="submit" id="CR_btn" >
-            Submit
-          </Button>
-        </form>
-        
-        <div>
-          
-        </div>
+       <motion.div 
+         className="crop-recommendation-container"
+         initial={{ opacity: 0, y: 20 }}
+         animate={{ opacity: 1, y: 0 }}
+         transition={{ duration: 0.6 }}
+       >
+         <div className="page-header">
+           <motion.h1 
+             initial={{ opacity: 0, y: -20 }}
+             animate={{ opacity: 1, y: 0 }}
+             transition={{ delay: 0.2, duration: 0.6 }}
+           >
+             <FaSeedling className="header-icon" />
+             Smart Crop Recommendation
+           </motion.h1>
+           <motion.p 
+             className="page-subtitle"
+             initial={{ opacity: 0 }}
+             animate={{ opacity: 1 }}
+             transition={{ delay: 0.4, duration: 0.6 }}
+           >
+             Get AI-powered crop recommendations based on your soil and weather conditions
+           </motion.p>
+         </div>
+
+         <motion.div 
+           className="form-container"
+           initial={{ opacity: 0, scale: 0.95 }}
+           animate={{ opacity: 1, scale: 1 }}
+           transition={{ delay: 0.3, duration: 0.6 }}
+         >
+           <form onSubmit={handleSubmit} className="recommendation-form">
+             <div className="form-grid">
+               <motion.div 
+                 className="form-group"
+                 whileHover={{ scale: 1.02 }}
+                 transition={{ duration: 0.2 }}
+               >
+                 <label><FaLeaf className="input-icon" /> Location</label>
+                 <input
+                   className="form-control enhanced-input"
+                   placeholder="Enter Your City"
+                   value={City}
+                   onChange={(event) => setCity(event.target.value)}
+                 />
+               </motion.div>
+               
+               <motion.div 
+                 className="form-group"
+                 whileHover={{ scale: 1.02 }}
+                 transition={{ duration: 0.2 }}
+               >
+                 <label>Nitrogen (N)</label>
+                 <input
+                   type="number"
+                   className="form-control enhanced-input"
+                   placeholder="Nitrogen content"
+                   value={Nitrogen}
+                   onChange={(event) => setNitrogen(event.target.value)}
+                 />
+               </motion.div>
+               
+               <motion.div 
+                 className="form-group"
+                 whileHover={{ scale: 1.02 }}
+                 transition={{ duration: 0.2 }}
+               >
+                 <label>Phosphorus (P)</label>
+                 <input
+                   type="number"
+                   className="form-control enhanced-input"
+                   placeholder="Phosphorus content"
+                   value={Phosphorus}
+                   onChange={(event) => setPhosphorus(event.target.value)}
+                 />
+               </motion.div>
+               
+               <motion.div 
+                 className="form-group"
+                 whileHover={{ scale: 1.02 }}
+                 transition={{ duration: 0.2 }}
+               >
+                 <label>Potassium (K)</label>
+                 <input
+                   type="number"
+                   className="form-control enhanced-input"
+                   placeholder="Potassium content"
+                   value={Potassium}
+                   onChange={(event) => setPotassium(event.target.value)}
+                 />
+               </motion.div>
+               
+               <motion.div 
+                 className="form-group"
+                 whileHover={{ scale: 1.02 }}
+                 transition={{ duration: 0.2 }}
+               >
+                 <label><FaThermometerHalf className="input-icon" /> pH Level</label>
+                 <input
+                   type="number"
+                   step="0.1"
+                   className="form-control enhanced-input"
+                   placeholder="pH value (0-14)"
+                   value={Ph}
+                   onChange={(event) => setPh(event.target.value)}
+                 />
+               </motion.div>
+               
+               <motion.div 
+                 className="form-group"
+                 whileHover={{ scale: 1.02 }}
+                 transition={{ duration: 0.2 }}
+               >
+                 <label><FaTint className="input-icon" /> Rainfall</label>
+                 <input
+                   type="number"
+                   className="form-control enhanced-input"
+                   placeholder="Expected rainfall (mm)"
+                   value={Rain}
+                   onChange={(event) => setRain(event.target.value)}
+                 />
+               </motion.div>
+             </div>
+             
+             <motion.div 
+               className="submit-container"
+               whileHover={{ scale: 1.05 }}
+               whileTap={{ scale: 0.95 }}
+             >
+               <Button 
+                 variant="success" 
+                 type="submit" 
+                 className="enhanced-submit-btn"
+                 disabled={isLoading}
+               >
+                 {isLoading ? (
+                   <>
+                     <motion.div 
+                       className="btn-spinner"
+                       animate={{ rotate: 360 }}
+                       transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                     />
+                     Analyzing...
+                   </>
+                 ) : (
+                   <>
+                     <FaSeedling className="btn-icon" />
+                     Get Recommendations
+                   </>
+                 )}
+               </Button>
+             </motion.div>
+           </form>
+         </motion.div>
         </div>
         </div>
 

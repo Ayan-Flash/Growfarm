@@ -1,9 +1,11 @@
 import React, { Component, useContext, useState } from "react";
 import { sha256 } from 'js-sha256'
+import { motion } from "framer-motion";
 import { AppContext } from "../AuthenticateFarmer/Farmer_account/appContext";
 import io from 'socket.io-client'
 import "./login.css"
 import Button from 'react-bootstrap/Button';
+import { FaUser, FaMobile, FaLock, FaSignInAlt } from "react-icons/fa";
 
 
 export default class Login extends Component {
@@ -115,10 +117,35 @@ export default class Login extends Component {
   render() {
 
     return (
-      <div className="auth-wrapper_Login">
-        <div className="auth-inner_Login">
-          <form className="form" id="loginform" onSubmit={this.handleSubmit}>
-            <h2 id="loginh2">Sign In</h2>
+      <motion.div 
+        className="auth-wrapper_Login"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.6 }}
+      >
+        <motion.div 
+          className="auth-inner_Login"
+          initial={{ y: 50, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.2, duration: 0.8 }}
+        >
+          <motion.form 
+            className="form" 
+            id="loginform" 
+            onSubmit={this.handleSubmit}
+            initial={{ x: -20, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ delay: 0.4, duration: 0.6 }}
+          >
+            <motion.h2 
+              id="loginh2"
+              initial={{ y: -20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.6, duration: 0.6 }}
+            >
+              <FaSignInAlt className="login-icon" />
+              Welcome Back
+            </motion.h2>
             <div className="radio_div">
               <label>
 
@@ -142,9 +169,8 @@ export default class Login extends Component {
 
             {this.state.Mobilenumfield ?
               <div className="mb-3">
-                <label>Mobile Number</label>
+                <label><FaMobile className="input-icon" /> Mobile Number</label>
                 <input
-                  // type="email"
 
                   className="form-control"
                   id="logindata"
@@ -155,9 +181,8 @@ export default class Login extends Component {
             }
             {this.state.Uniqeidfield ?
               <div className="mb-3">
-                <label>Unique Farmer Id</label>
+                <label><FaUser className="input-icon" /> Unique Farmer Id</label>
                 <input
-                  // type="email"
 
                   className="form-control"
                   id="logindata"
@@ -170,7 +195,7 @@ export default class Login extends Component {
             }
 
             <div className="mb-3">
-              <label>Password</label>
+              <label><FaLock className="input-icon" /> Password</label>
               <input
                 type="password"
                 className="form-control"
@@ -182,24 +207,35 @@ export default class Login extends Component {
             </div>
 
             <div className="d-grid">
-              <Button variant="success" type="submit" className="btn btn-primary" id="singinbtn"/*style={{color:"black"}}*/>
-                Submit
-              </Button>
+              <motion.div
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <Button variant="success" type="submit" className="btn btn-primary enhanced-login-btn" id="singinbtn">
+                  <FaSignInAlt className="btn-icon" />
+                  Sign In
+                </Button>
+              </motion.div>
             </div>
             <p className="forgot-password text-right" >
               <a id="login_pageflow" href="/sign-up">Sign Up</a> <br />
               <a id="login_pageflow" href="/adminlogin">Admin Login</a>
             </p>
 
-          </form>
+          </motion.form>
 
-          <div id="rightside">
+          <motion.div 
+            id="rightside"
+            initial={{ x: 20, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ delay: 0.5, duration: 0.6 }}
+          >
             <img id="rightimg" src="./imgs/login_pic.jpg" alt="loginimg"></img>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
 
-      </div>
+      </motion.div>
 
 
     );

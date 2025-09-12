@@ -1,153 +1,419 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import { motion } from 'framer-motion'
+import { Card, Button, Container, Row, Col } from 'react-bootstrap'
+import { FaSeedling, FaBug, FaCloudSun, FaUsers, FaChartLine, FaRobot } from 'react-icons/fa'
 import "./Farmer_homepage.css"
 
 function Farmer_homepage() {
+  const [currentSlide, setCurrentSlide] = useState(0)
+  const [stats, setStats] = useState({
+    totalFarmers: 0,
+    cropsRecommended: 0,
+    diseasesDetected: 0,
+    weatherAlerts: 0
+  })
+
+  const slides = [
+    {
+      image: "imgs/slider1.jpeg",
+      title: "Smart Agriculture Revolution",
+      subtitle: "Empowering farmers with AI-driven insights and modern farming techniques"
+    },
+    {
+      image: "imgs/slider2.jpg", 
+      title: "Precision Farming Solutions",
+      subtitle: "Optimize your crop yield with data-driven recommendations"
+    },
+    {
+      image: "imgs/Overview.jpg",
+      title: "Sustainable Future",
+      subtitle: "Building a sustainable agricultural ecosystem for tomorrow"
+    }
+  ]
+
+  const features = [
+    {
+      icon: <FaSeedling />,
+      title: "Crop Recommendation & Yield Prediction",
+      description: "Get AI-powered crop recommendations based on soil conditions, weather patterns, and historical data to maximize your yield potential.",
+      image: "imgs/Crop Recommendation.jpg",
+      color: "#4CAF50"
+    },
+    {
+      icon: <FaBug />,
+      title: "Disease Detection",
+      description: "Upload photos of your crops to instantly identify diseases and receive treatment recommendations from our advanced ML models.",
+      image: "imgs/Disease Prediction.jpg",
+      color: "#FF5722"
+    },
+    {
+      icon: <FaCloudSun />,
+      title: "Weather Analytics",
+      description: "Stay ahead with real-time weather forecasts, alerts, and climate insights tailored for your farming operations.",
+      image: "imgs/Weather1.jpg",
+      color: "#2196F3"
+    },
+    {
+      icon: <FaUsers />,
+      title: "Expert Consultation",
+      description: "Connect with agricultural experts for personalized advice and solutions to your farming challenges.",
+      image: "imgs/Expert talk.png",
+      color: "#9C27B0"
+    },
+    {
+      icon: <FaChartLine />,
+      title: "Scheme Management",
+      description: "Discover and apply for government schemes and subsidies designed to support modern farming practices.",
+      image: "imgs/Alert And Update System.jpg",
+      color: "#FF9800"
+    },
+    {
+      icon: <FaRobot />,
+      title: "AI Assistant",
+      description: "Get instant answers to your farming questions with our intelligent chatbot available 24/7.",
+      image: "imgs/Chatbot Grow.jpg",
+      color: "#607D8B"
+    }
+  ]
+
+  useEffect(() => {
+    // Animate stats counter
+    const animateStats = () => {
+      const targets = { totalFarmers: 15420, cropsRecommended: 8750, diseasesDetected: 3240, weatherAlerts: 12680 }
+      const duration = 2000
+      const steps = 60
+      const stepTime = duration / steps
+
+      let step = 0
+      const timer = setInterval(() => {
+        step++
+        const progress = step / steps
+        setStats({
+          totalFarmers: Math.floor(targets.totalFarmers * progress),
+          cropsRecommended: Math.floor(targets.cropsRecommended * progress),
+          diseasesDetected: Math.floor(targets.diseasesDetected * progress),
+          weatherAlerts: Math.floor(targets.weatherAlerts * progress)
+        })
+
+        if (step >= steps) {
+          clearInterval(timer)
+          setStats(targets)
+        }
+      }, stepTime)
+    }
+
+    const timer = setTimeout(animateStats, 1000)
+    return () => clearTimeout(timer)
+  }, [])
+
+  useEffect(() => {
+    const slideTimer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % slides.length)
+    }, 5000)
+
+    return () => clearInterval(slideTimer)
+  }, [])
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  }
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        duration: 0.6
+      }
+    }
+  }
+
   return (
-      <>
-     <div id="carouselExampleDark" className="carousel carousel-dark slide" data-bs-ride="carousel">
-    <div className="carousel-indicators">
-      <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" className="active"
-        aria-current="true" aria-label="Slide 1"></button>
-      <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
-      <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
-    </div>
-    <div className="carousel-inner">
-      <div className="carousel-item active" data-bs-interval="10000">
-        <img src="imgs/slider1.jpeg" className="d-block w-100" alt="..." height="600px" width="900px"/>
-        <div className="carousel-caption d-none d-md-block">
-          <h5>First slide label</h5>
-          <p>Some representative placeholder content for the first slide.</p>
+    <>
+      {/* Enhanced Hero Carousel */}
+      <div className="hero-carousel">
+        <div className="carousel-container">
+          {slides.map((slide, index) => (
+            <motion.div
+              key={index}
+              className={`carousel-slide ${index === currentSlide ? 'active' : ''}`}
+              initial={{ opacity: 0, scale: 1.1 }}
+              animate={{ 
+                opacity: index === currentSlide ? 1 : 0,
+                scale: index === currentSlide ? 1 : 1.1
+              }}
+              transition={{ duration: 1 }}
+            >
+              <img src={slide.image} alt={slide.title} />
+              <div className="carousel-overlay">
+                <motion.div 
+                  className="carousel-content"
+                  initial={{ y: 50, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ delay: 0.5, duration: 0.8 }}
+                >
+                  <h1>{slide.title}</h1>
+                  <p>{slide.subtitle}</p>
+                  <Button variant="success" size="lg" className="cta-button">
+                    Get Started
+                  </Button>
+                </motion.div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+        
+        {/* Carousel Indicators */}
+        <div className="carousel-indicators">
+          {slides.map((_, index) => (
+            <button
+              key={index}
+              className={`indicator ${index === currentSlide ? 'active' : ''}`}
+              onClick={() => setCurrentSlide(index)}
+            />
+          ))}
         </div>
       </div>
-      <div className="carousel-item" data-bs-interval="2000">
-        <img src="imgs/slider2.jpg" className="d-block w-100" alt="..." height="600px" width="900px"/>
-        <div className="carousel-caption d-none d-md-block">
-          <h5>Second slide label</h5>
-          <p>Some representative placeholder content for the second slide.</p>
-        </div>
-      </div>
-      <div className="carousel-item">
-        <img src="imgs/Overview.jpg" className="d-block w-100" alt="..." height="600px" width="900px"/>
-        <div className="carousel-caption d-none d-md-block">
-          <h5>Third slide label</h5>
-          <p>Some representative placeholder content for the third slide.</p>
-        </div>
-      </div>
-    </div>
-    <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
-      <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span className="visually-hidden">Previous</span>
-    </button>
-    <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
-      <span className="carousel-control-next-icon" aria-hidden="true"></span>
-      <span className="visually-hidden">Next</span>
-    </button>
-  </div>
 
+      {/* Stats Section */}
+      <motion.section 
+        className="stats-section"
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        viewport={{ once: true }}
+      >
+        <Container>
+          <Row>
+            <Col md={3}>
+              <div className="stat-card">
+                <h3>{stats.totalFarmers.toLocaleString()}</h3>
+                <p>Registered Farmers</p>
+              </div>
+            </Col>
+            <Col md={3}>
+              <div className="stat-card">
+                <h3>{stats.cropsRecommended.toLocaleString()}</h3>
+                <p>Crops Recommended</p>
+              </div>
+            </Col>
+            <Col md={3}>
+              <div className="stat-card">
+                <h3>{stats.diseasesDetected.toLocaleString()}</h3>
+                <p>Diseases Detected</p>
+              </div>
+            </Col>
+            <Col md={3}>
+              <div className="stat-card">
+                <h3>{stats.weatherAlerts.toLocaleString()}</h3>
+                <p>Weather Alerts Sent</p>
+              </div>
+            </Col>
+          </Row>
+        </Container>
+      </motion.section>
 
-
- <div className="allcard">
-
-  <div id="cardsec1" className="card-group" >
-    <div className="card" id="card1">
-      <img src="imgs/Crop Recommendation.jpg" id="cardimg1" className="card-img-top" alt="Crop Recommendation & Yield Pradiction"/>
-      <div className="card-body">
-        <h5 className="card-title">Crop Recommendation & Yield Pradiction</h5>
-        <p className="card-text">
+      {/* Enhanced Features Section */}
+      <motion.section 
+        className="features-section"
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+      >
+        <Container>
+          <motion.div className="section-header" variants={itemVariants}>
+            <h2>Comprehensive Farming Solutions</h2>
+            <p>Discover our suite of AI-powered tools designed to revolutionize your farming experience</p>
+          </motion.div>
           
+          <Row>
+            {features.map((feature, index) => (
+              <Col lg={4} md={6} key={index}>
+                <motion.div variants={itemVariants}>
+                  <Card className="feature-card" style={{ '--accent-color': feature.color }}>
+                    <div className="feature-image">
+                      <img src={feature.image} alt={feature.title} />
+                      <div className="feature-overlay">
+                        <div className="feature-icon" style={{ color: feature.color }}>
+                          {feature.icon}
+                        </div>
+                      </div>
+                    </div>
+                    <Card.Body>
+                      <Card.Title>{feature.title}</Card.Title>
+                      <Card.Text>{feature.description}</Card.Text>
+                      <Button 
+                        variant="outline-success" 
+                        className="feature-btn"
+                        style={{ borderColor: feature.color, color: feature.color }}
+                      >
+                        Learn More
+                      </Button>
+                    </Card.Body>
+                  </Card>
+                </motion.div>
+              </Col>
+            ))}
+          </Row>
+        </Container>
+      </motion.section>
 
-          If a farmer wants to know which crops will produce a good yield. For this, information such as the district, the current season, the crop he wishes to plant, the size of his farm, the amount of nitrogen, phosphorus, and potassium, and finally the pH level must be entered. With this information, a crop with a high yield can be predicted and recommended to the farmer.
+      {/* Enhanced Overview Section */}
+      <motion.section 
+        className="overview-section"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{ duration: 1 }}
+        viewport={{ once: true }}
+      >
+        <Container>
+          <Row className="align-items-center">
+            <Col lg={6}>
+              <motion.div
+                initial={{ x: -50, opacity: 0 }}
+                whileInView={{ x: 0, opacity: 1 }}
+                transition={{ duration: 0.8 }}
+                viewport={{ once: true }}
+              >
+                <h2>Digital Agriculture Platform</h2>
+                <p>
+                  Our comprehensive digital platform creates individual profiles for every farmer, 
+                  integrating personal information, farm details, yield data, and financial records. 
+                  This centralized system enables government agencies and policymakers to implement 
+                  targeted programs and subsidies effectively.
+                </p>
+                <ul className="feature-list">
+                  <li>✓ Centralized farmer database</li>
+                  <li>✓ AI-powered recommendations</li>
+                  <li>✓ Real-time weather alerts</li>
+                  <li>✓ Disease detection system</li>
+                  <li>✓ Government scheme integration</li>
+                  <li>✓ Digital contract farming</li>
+                </ul>
+                <Button variant="success" size="lg" className="mt-3">
+                  Join Platform
+                </Button>
+              </motion.div>
+            </Col>
+            <Col lg={6}>
+              <motion.div
+                initial={{ x: 50, opacity: 0 }}
+                whileInView={{ x: 0, opacity: 1 }}
+                transition={{ duration: 0.8 }}
+                viewport={{ once: true }}
+                className="overview-visual"
+              >
+                <div className="floating-cards">
+                  <div className="floating-card card-1">
+                    <FaSeedling />
+                    <span>Smart Farming</span>
+                  </div>
+                  <div className="floating-card card-2">
+                    <FaChartLine />
+                    <span>Analytics</span>
+                  </div>
+                  <div className="floating-card card-3">
+                    <FaCloudSun />
+                    <span>Weather</span>
+                  </div>
+                </div>
+              </motion.div>
+            </Col>
+          </Row>
+        </Container>
+      </motion.section>
 
-        </p>
-      </div>
-      <div className="card-footer">
-        <small className="text-muted">link</small>
-      </div>
-    </div>
+      {/* New Testimonials Section */}
+      <motion.section 
+        className="testimonials-section"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{ duration: 0.8 }}
+        viewport={{ once: true }}
+      >
+        <Container>
+          <h2 className="text-center mb-5">What Farmers Say</h2>
+          <Row>
+            <Col md={4}>
+              <motion.div 
+                className="testimonial-card"
+                whileHover={{ y: -10 }}
+                transition={{ duration: 0.3 }}
+              >
+                <div className="testimonial-content">
+                  <p>"SmartAgri helped me increase my crop yield by 40% with their AI recommendations!"</p>
+                  <div className="testimonial-author">
+                    <strong>Ramesh Patel</strong>
+                    <span>Kheda District</span>
+                  </div>
+                </div>
+              </motion.div>
+            </Col>
+            <Col md={4}>
+              <motion.div 
+                className="testimonial-card"
+                whileHover={{ y: -10 }}
+                transition={{ duration: 0.3 }}
+              >
+                <div className="testimonial-content">
+                  <p>"The disease detection feature saved my entire cotton crop. Amazing technology!"</p>
+                  <div className="testimonial-author">
+                    <strong>Priya Shah</strong>
+                    <span>Rajkot District</span>
+                  </div>
+                </div>
+              </motion.div>
+            </Col>
+            <Col md={4}>
+              <motion.div 
+                className="testimonial-card"
+                whileHover={{ y: -10 }}
+                transition={{ duration: 0.3 }}
+              >
+                <div className="testimonial-content">
+                  <p>"Weather alerts helped me protect my crops from unexpected rainfall. Highly recommended!"</p>
+                  <div className="testimonial-author">
+                    <strong>Vikram Singh</strong>
+                    <span>Ahmedabad District</span>
+                  </div>
+                </div>
+              </motion.div>
+            </Col>
+          </Row>
+        </Container>
+      </motion.section>
 
-    <div className="card" id="card2">
-      <img src="imgs/Disease Prediction.jpg" id="cardimg2"className="card-img-top" alt="..." />
-      <div className="card-body">
-        <h5 className="card-title">Disease Detection</h5>
-        <p className="card-text">
-          If a crop is found to be infected with a disease. The farmer can upload a photo of the damaged plant. The disease would be displayed, and approaches to save the crop would be given to the farmer. The farmer would also be advised to use pesticides and insecticides.
-
-        </p>
-      </div>
-      <div className="card-footer">
-        <small className="text-muted">link</small>
-      </div>
-    </div>
-
-    <div className="card" id="card3">
-      <img src="imgs/Alert And Update System.jpg" id="cardimg3"className="card-img-top" alt="..." />
-      <div className="card-body">
-        <h5 className="card-title">Alert & Update</h5>
-        <p className="card-text">
-
-        The beneficiary scheme section lists all of the current and new schemes that are helpful to farmers. The schemes that a farmer applied for, the schemes that were approved for the farmer, and the schemes that were denied for various reasons are all shown here.
-      </p>
-      </div>
-      <div className="card-footer">
-        <small className="text-muted">link</small>
-      </div>
-    </div>
-  </div>
-
-
-  <div id="cardsec2" className="card-group" >
-    <div className="card" id="card4">
-      <img src="imgs/Weather1.jpg" id="cardimg4"className="card-img-top" alt="..." />
-      <div className="card-body">
-        <h5 className="card-title">Weather </h5>
-        <p className="card-text">
-          Forecasting the weather is also done here. If the weather changes, the farmer will be notified so that they can save their crop. A cotton crop, for example, will suffer if it rains. So the farmers are warned ahead of time that it is going to rain. Farmers will be notified that the humidity has increased and there is a greater chance of rain.
-
-         </p>
-      </div>
-      <div className="card-footer">
-        <small className="text-muted">link</small>
-      </div>
-    </div>
-
-    <div className="card" id="card5">
-      <img src="imgs/Expert talk.png" id="cardimg5"className="card-img-top" alt="..." />
-      <div className="card-body">
-        <h5 className="card-title">Expert Talk</h5>
-        <p className="card-text">
-          A useful method of expert talks is also introduced on the website, through which farmers may interact with experts with more competence in the subject to improve their farming and the land, which will ultimately contribute to the farmer's improvement.
-          Expert also help them which crop they will need according to their land and other information related to land or crop,
-
-
-        </p>
-      </div>
-      <div className="card-footer">
-        <small className="text-muted">link</small>
-      </div>
-    </div>
-
-    <div className="card" id="card6">
-      <img src="imgs/Chatbot Grow.jpg" id="cardimg6"className="card-img-top" alt="..." />
-      <div className="card-body">
-        <h5 className="card-title">Chatbot GrowFarm</h5>
-        <p className="card-text">
-          
-          The portal uses a chat bot system so that farmers may communicate with it about any issues or support they need to use the site, such as crop recommendations information on new schemes, and much more that is relevant to the features of the site.
-        </p>
-      </div>
-      <div className="card-footer">
-        <small className="text-muted">link</small>
-      </div>
-    </div>
-  </div>
-</div>
-
-<h4 id="overview_content">Overview</h4>
-  <div id="overview">
-    A centralised  system that includes each basic details of the farmer including their  personal information, communication details, farm location and details, field information, yield information, credit, insurance, and qualification in order to create an individual digital profile of every farmer in the state and to create a common database for advancing agriculture. This system can be used by the government and policymakers to implement new programmes and subsidies for farmers who qualify for them. The information gathered from farmers will be used to digitise contract farming and direct buying and selling.e maintained in a protected database utilising the system also contains recommendation systems (such as advice for fertilisers, seeds, and crops), alert/update systems (such as weather warnings), and disease detection. The portal contains a method to send out notifications for new government programmes as well as the fertilisation and harvesting times for the crop to the farmers.
-    
-
-  </div>
+      {/* Call to Action Section */}
+      <motion.section 
+        className="cta-section"
+        initial={{ opacity: 0, scale: 0.9 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.8 }}
+        viewport={{ once: true }}
+      >
+        <Container>
+          <div className="cta-content">
+            <h2>Ready to Transform Your Farming?</h2>
+            <p>Join thousands of farmers who are already benefiting from our smart agriculture platform</p>
+            <div className="cta-buttons">
+              <Button variant="success" size="lg" className="me-3">
+                Start Free Trial
+              </Button>
+              <Button variant="outline-light" size="lg">
+                Watch Demo
+              </Button>
+            </div>
+          </div>
+        </Container>
+      </motion.section>
     </>
   )
 }

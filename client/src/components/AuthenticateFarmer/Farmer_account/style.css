@@ -1,3 +1,51 @@
+/* Enhanced Profile Styles */
+
+.profile-icon {
+  margin-right: 10px;
+  color: #4CAF50;
+  font-size: 1.1rem;
+}
+
+.section-icon {
+  margin-right: 10px;
+  color: #4CAF50;
+  font-size: 1.2rem;
+}
+
+.copy-icon {
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: #4CAF50;
+}
+
+.copy-icon:hover {
+  color: #66BB6A;
+  transform: scale(1.2);
+}
+
+.enhanced-add-btn {
+  background: linear-gradient(45deg, #4CAF50, #66BB6A);
+  border: none;
+  border-radius: 50px;
+  padding: 12px 30px;
+  font-weight: 600;
+  box-shadow: 0 8px 25px rgba(76, 175, 80, 0.3);
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.enhanced-add-btn:hover {
+  background: linear-gradient(45deg, #66BB6A, #4CAF50);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 35px rgba(76, 175, 80, 0.4);
+}
+
+.btn-icon {
+  font-size: 1rem;
+}
+
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
 
 .Farmername{
@@ -27,20 +75,26 @@
     flex-direction: column;
     text-align: left;
     margin-top: 120px;
+    z-index: 100;
 }
 
 .auth-inner_AccountmainP{
     width: 400px;
     height: 600px;
-margin-left: 40px;
-margin-top: 530px;
-position: fixed;
-    /* border: 1px solid black; */
+    margin-left: 40px;
+    margin-top: 530px;
+    position: fixed;
     background: #ffffff;
-    box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
+    box-shadow: 0 25px 80px rgba(0, 0, 0, 0.15);
     padding: 40px 55px 45px 55px;
-    border-radius: 7px;
-    transition: all 0.3s;
+    border-radius: 20px;
+    transition: all 0.4s ease;
+    border: 1px solid rgba(76, 175, 80, 0.1);
+}
+
+.auth-inner_AccountmainP:hover {
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.2);
+  transform: translateY(-5px);
 }
 
 .auth-wrapper_Account{
@@ -156,6 +210,7 @@ position: fixed;
     flex-direction: column;
     text-align: left;
     margin-left: 480px;
+    z-index: 50;
 }
 
 .Mainin_Farmer_Account{
@@ -163,12 +218,17 @@ position: fixed;
     height: 600px;
     margin: auto;
     background: #ffffff;
-    box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
+    box-shadow: 0 25px 80px rgba(0, 0, 0, 0.15);
     padding: 40px 55px 45px 55px;
-    border-radius: 10px;
-    transition: all 0.3s;
+    border-radius: 20px;
+    transition: all 0.4s ease;
     overflow-x: hidden;
     overflow-y: scroll;
+    border: 1px solid rgba(76, 175, 80, 0.1);
+}
+
+.Mainin_Farmer_Account:hover {
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.2);
 }
 
 .intabs{

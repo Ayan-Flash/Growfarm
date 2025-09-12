@@ -1,6 +1,8 @@
 import axios from "axios";
 import React, { Component } from "react";
+import { motion } from "framer-motion";
 import { Button } from "react-bootstrap";
+import { FaBug, FaUpload, FaCamera, FaLeaf } from "react-icons/fa";
 import "./style.css";
 
 class App extends Component {
@@ -45,20 +47,98 @@ class App extends Component {
   render() {
     return (
       <>
-        <h3 style={{ marginTop: "100px" }}>Disease detection</h3>
+        <motion.div 
+          className="disease-detection-container"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          <div className="page-header">
+            <motion.h1 
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.6 }}
+            >
+              <FaBug className="header-icon" />
+              Plant Disease Detection
+            </motion.h1>
+            <motion.p 
+              className="page-subtitle"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.4, duration: 0.6 }}
+            >
+              Upload a photo of your plant to instantly identify diseases and get treatment recommendations
+            </motion.p>
+          </div>
 
-        <div>
-          <input type="file" onChange={this.onFileChange} />
-          <Button style={{backgroundColor : "green" , color : "white"}} variant="Success" className="btn"onClick={this.onFileUpload}>Upload!</Button>
-        </div>
-        <div className="mainbox">
+          <motion.div 
+            className="upload-section"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.3, duration: 0.6 }}
+          >
+            <div className="upload-container">
+              <div className="upload-area">
+                <FaCamera className="upload-icon" />
+                <h4>Upload Plant Image</h4>
+                <p>Choose a clear photo of the affected plant part</p>
+                <input 
+                  type="file" 
+                  onChange={this.onFileChange} 
+                  accept="image/*"
+                  className="file-input"
+                  id="file-upload"
+                />
+                <label htmlFor="file-upload" className="file-label">
+                  <FaUpload className="upload-btn-icon" />
+                  Choose Image
+                </label>
+              </div>
+              
+              {this.state.selectedFile && (
+                <motion.div 
+                  className="file-preview"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4 }}
+                >
+                  <p>Selected: {this.state.selectedFile.name}</p>
+                  <Button 
+                    className="enhanced-upload-btn" 
+                    onClick={this.onFileUpload}
+                  >
+                    <FaLeaf className="btn-icon" />
+                    Analyze Disease
+                  </Button>
+                </motion.div>
+              )}
+            </div>
+          </motion.div>
+          
+          <div className="results-container">
           {this.state.data ? (
-            <>
+            <motion.div 
+              className="results-grid"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+            >
               <div className="Diseasedete">
-                <img src={this.state.previewimg} width="400" height="10" />
+                <motion.img 
+                  src={this.state.previewimg} 
+                  className="disease-image"
+                  whileHover={{ scale: 1.05 }}
+                  transition={{ duration: 0.3 }}
+                />
               </div>
               <div className="Diseasedete2">
-                <table id="F_model_Table">
+                <motion.table 
+                  id="F_model_Table"
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.3, duration: 0.6 }}
+                >
                   <tr>
                     <th>Crop Name</th>
                     <td> {this.state.Diseas.Crop} </td>
@@ -77,11 +157,12 @@ class App extends Component {
                     <th>Crop Suggestion</th>
                     <td>{this.state.Diseas.Sugession}</td>
                   </tr>
-                </table>
+                </motion.table>
               </div>
-            </>
+            </motion.div>
           ) : null}
-        </div>
+          </div>
+        </motion.div>
 
         <br />
       </>

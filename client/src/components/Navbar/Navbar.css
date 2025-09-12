@@ -12,7 +12,8 @@
   }
   
   #nav {
-    background-color: #DCFADC !important;
+    background: linear-gradient(135deg, #DCFADC 0%, #f0f8f0 100%) !important;
+    backdrop-filter: blur(10px);
     color: rgb(0, 0, 0) !important;
     display: flex;
     font-size: 15px;
@@ -23,6 +24,21 @@
     padding: 0 0.09rem !important;
     height: 60px;
     position: fixed;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+  }
+  
+  .logo-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .logo-text {
+    font-size: 1.8rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
   }
   
   .site-title {
@@ -30,6 +46,12 @@
     color: #000000 !important;
     font-weight: 700;
     margin-right: 10rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+  
+  .site-title:hover {
+    color: #4CAF50 !important;
   }
   
   #nav ul {
@@ -39,7 +61,7 @@
     display: flex;
     gap: 0.3rem !important;
     font-size: 17px;
-    
+    align-items: center;
   }
   
   #nav a {
@@ -49,36 +71,69 @@
     display: flex;
     align-items: center;
     padding: 0.1rem !important;
+    transition: all 0.3s ease;
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .nav-icon {
+    margin-right: 8px;
+    font-size: 1.1rem;
+    transition: transform 0.3s ease;
+  }
+  
+  #nav a:hover .nav-icon {
+    transform: scale(1.1);
   }
   
   #nav li {
-    /* margin-right: -40px; */
     padding-right: 10px;
     padding-left: 10px;
+    position: relative;
+    transition: all 0.3s ease;
   }
+  
+  #nav li::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 3px;
+    background: linear-gradient(45deg, #4CAF50, #66BB6A);
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+  }
+  
+  #nav li:hover::before,
+  #nav li.active::before {
+    width: 80%;
+  }
+  
   #nav li.active {
-    background-color: #9EFF9E;
-    margin-top: 12px;
-    margin-bottom: 12px;
-    border-radius: 5px;
-    padding-right: 10px;
-    padding-left: 10px;
+    background: linear-gradient(135deg, rgba(76, 175, 80, 0.1) 0%, rgba(102, 187, 106, 0.1) 100%);
+    border-radius: 8px;
+    transform: translateY(-2px);
   }
   
   #nav li:hover {
-    background-color: #9EFF9E;
-    margin-top: 12px;
-    margin-bottom: 12px;
-    border-radius: 5px;
-    padding-right: 10px;
-    padding-left: 10px;
+    background: linear-gradient(135deg, rgba(76, 175, 80, 0.15) 0%, rgba(102, 187, 106, 0.15) 100%);
+    border-radius: 8px;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(76, 175, 80, 0.2);
   }
 
   .mainlogo1{
     margin-top: 10px;
     margin-bottom: 10px;
-margin-right: 20px;
-height: 45px;
+    margin-right: 15px;
+    height: 45px;
+    transition: transform 0.3s ease;
+  }
+  
+  .mainlogo1:hover {
+    transform: rotate(5deg) scale(1.1);
   }
 
 

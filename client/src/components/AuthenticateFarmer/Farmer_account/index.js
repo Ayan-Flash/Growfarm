@@ -1,4 +1,5 @@
 import React, { useEffect, useContext, useState } from "react";
+import { motion } from "framer-motion";
 import style from "./style.css";
 import profileimg from "./profile.png";
 import Modal from "react-bootstrap/Modal";
@@ -9,7 +10,8 @@ import Tabs from "react-bootstrap/Tabs";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
 import Button from "react-bootstrap/Button";
-import { BsCheckCircleFill, BsInfoCircleFill } from "react-icons/bs";
+import { BsCheckCircleFill, BsInfoCircleFill, BsPersonFill } from "react-icons/bs";
+import { FaUser, FaMapMarkerAlt, FaUniversity, FaHistory, FaPlus } from "react-icons/fa";
 import { AiOutlineCopy } from "react-icons/ai";
 import copy from "copy-to-clipboard";
 import jsPDF from "jspdf";
@@ -217,15 +219,26 @@ data.map((newdata => {
 
   return auth ? (
     <>
-      <div className="auth-wrapper_AccountmainP">
-        <div className="auth-inner_AccountmainP">
+      <motion.div 
+        className="auth-wrapper_AccountmainP"
+        initial={{ opacity: 0, x: -50 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.6 }}
+      >
+        <motion.div 
+          className="auth-inner_AccountmainP"
+          whileHover={{ scale: 1.02 }}
+          transition={{ duration: 0.3 }}
+        >
           <div>
-            <img
+            <motion.img
               className="rounded-full"
               id="Profileimage"
               src="/Profileimage.svg"
               alt="..."
-            ></img>
+              whileHover={{ scale: 1.1, rotate: 5 }}
+              transition={{ duration: 0.3 }}
+            />
             <OverlayTrigger
               placement="right"
               overlay={
@@ -235,7 +248,8 @@ data.map((newdata => {
               {({ ref, ...triggerHandler }) => (
                 <>
                   <h6 className="MainP">
-                    {JSON.parse(auth).Name} &nbsp;
+                    <FaUser className="profile-icon" />
+                    {JSON.parse(auth).Name}
                     <div
                       ref={ref}
                       variant="light"
@@ -263,7 +277,8 @@ data.map((newdata => {
                     id="farmerID"
                     style={{ color: "#44A444", fontSize: "15px" }}
                   >
-                    {JSON.parse(auth).Farmerid} &nbsp;
+                    <BsPersonFill className="profile-icon" />
+                    {JSON.parse(auth).Farmerid}
                     <div
                       ref={ref}
                       variant="light"
@@ -274,12 +289,23 @@ data.map((newdata => {
                         style={{ height: "0.6em", width: "0.6em" }}
                       />
                     </div>{" "}
-                    <AiOutlineCopy
+                    <motion.div
+                      whileHover={{ scale: 1.2 }}
+                      whileTap={{ scale: 0.9 }}
+                    >
+                      <AiOutlineCopy
                       style={{ height: "1.4em", width: "1.4em" }}
                       onClick={copyToClipboard}
-                    ></AiOutlineCopy>
+                      className="copy-icon"
+                      />
+                    </motion.div>
                   </h6>
-                  <table id="F_Account_Pinfo">
+                  <motion.table 
+                    id="F_Account_Pinfo"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3, duration: 0.6 }}
+                  >
                     <tr>
                       <th>Farmertype</th>
                       <td>{JSON.parse(auth).Farmertype}</td>
@@ -318,10 +344,15 @@ data.map((newdata => {
               )}
             </OverlayTrigger>
           </div>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
 
-      <div className="Main_Farmer_Account">
+      <motion.div 
+        className="Main_Farmer_Account"
+        initial={{ opacity: 0, x: 50 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.6, delay: 0.2 }}
+      >
         <div className="Mainin_Farmer_Account">
           <Tabs
             defaultActiveKey="profile"
@@ -343,12 +374,20 @@ data.map((newdata => {
           >
             <Tab eventKey="profile" title="Communication Details" id="intabs">
               <br />
-              <Card id="F_A_Minfo">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4, duration: 0.6 }}
+              >
+                <Card id="F_A_Minfo">
                 <Card.Body>
                   <div>
                     <Image src="/Leaf.svg" id="Leaf1info" />
                     <Image src="/Leaf1.svg" id="Leaf1info1" />
-                    <h4 className="CD_title">Communication details</h4>
+                    <h4 className="CD_title">
+                      <FaMapMarkerAlt className="section-icon" />
+                      Communication Details
+                    </h4>
                     <hr />
                     <div className="commcont">
                       <p>
@@ -380,7 +419,10 @@ data.map((newdata => {
                   </div>
                   <div>
                     <br />
-                    <h4 className="CD_title">Bank details</h4>
+                    <h4 className="CD_title">
+                      <FaUniversity className="section-icon" />
+                      Bank Details
+                    </h4>
                     <hr />
                     <div className="commcont">
                       <p>
@@ -399,6 +441,7 @@ data.map((newdata => {
                   </div>
                 </Card.Body>
               </Card>
+              </motion.div>
             </Tab>
             <Tab eventKey="home" title="Farm Information">
               <br />
@@ -406,13 +449,26 @@ data.map((newdata => {
                 {farmdata.map((farm, idx) => {
                   return (
                     <>
-                      <h5 className="FarmTitle">
+                      <motion.h5 
+                        className="FarmTitle"
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: idx * 0.1, duration: 0.6 }}
+                      >
                         Farm : {idx + 1} ({farm.Farmname})
-                      </h5>
-                      <Card id="F_A_Minfo">
+                      </motion.h5>
+                      <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: idx * 0.1 + 0.2, duration: 0.6 }}
+                      >
+                        <Card id="F_A_Minfo">
                         <Card.Body>
                           <div>
-                            <h4 className="CD_title">Farm Location</h4>
+                            <h4 className="CD_title">
+                              <FaMapMarkerAlt className="section-icon" />
+                              Farm Location
+                            </h4>
                             <hr />
                             <div className="commcont">
                               <p className="P_alltags">
@@ -441,7 +497,10 @@ data.map((newdata => {
                           </div>
                           <div>
                             <br />
-                            <h4 className="CD_title">Land information</h4>
+                            <h4 className="CD_title">
+                              <FaMapMarkerAlt className="section-icon" />
+                              Land Information
+                            </h4>
                             <hr />
                             <div className="commcont">
                               <p className="P_alltags">
@@ -471,7 +530,10 @@ data.map((newdata => {
                           </div>
                           <div>
                             <br />
-                            <h4 className="CD_title">Land Area</h4>
+                            <h4 className="CD_title">
+                              <FaMapMarkerAlt className="section-icon" />
+                              Land Area
+                            </h4>
                             <hr />
                             <div className="commcont">
                               <p className="P_alltags">
@@ -501,7 +563,10 @@ data.map((newdata => {
                             <br />
                             <br />
                             <br />
-                            <h4 className="CD_title">Farm Ownership Details</h4>
+                            <h4 className="CD_title">
+                              <FaUser className="section-icon" />
+                              Farm Ownership Details
+                            </h4>
                             <hr />
                             <div className="commcont">
                               {farm.Ownership_Details.map(
@@ -524,7 +589,10 @@ data.map((newdata => {
                           </div>
                           <div>
                             <br />
-                            <h4 className="CD_title">Farm Ownership Details</h4>
+                            <h4 className="CD_title">
+                              <FaUser className="section-icon" />
+                              Other Rights Details
+                            </h4>
                             <hr />
                             <div className="commcont">
                               {farm.OtherRightsDetails.map(
@@ -547,6 +615,7 @@ data.map((newdata => {
                           </div>
                         </Card.Body>
                       </Card>
+                      </motion.div>
                       {/* <Col key={idx}>
                         
                         <div className="parentbox">
@@ -697,7 +766,15 @@ data.map((newdata => {
 {/* <h1>{Yielddata.Are}</h1> */}
               </div>
 <br />
-<Button onClick={AddnewCrop}>Add New Crop Details</Button>
+<motion.div
+  whileHover={{ scale: 1.05 }}
+  whileTap={{ scale: 0.95 }}
+>
+  <Button onClick={AddnewCrop} className="enhanced-add-btn">
+    <FaPlus className="btn-icon" />
+    Add New Crop Details
+  </Button>
+</motion.div>
 
               {show ? (
                       <Modal

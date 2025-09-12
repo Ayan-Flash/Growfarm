@@ -1,9 +1,11 @@
 import { Link, useMatch, useNavigate, useResolvedPath } from "react-router-dom";
 import React, { useContext, useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import "./Navbar.css";
 import Logo1 from "../../assets/logo.svg";
 import CardMedia from "@mui/material/CardMedia";
 import { BsBell, BsCircle, BsFillBellFill } from "react-icons/bs";
+import { FaHome, FaUser, FaComments, FaCloudSun, FaListAlt, FaChartBar, FaSignOutAlt } from "react-icons/fa";
 import { AppContext } from "../AuthenticateFarmer/Farmer_account/appContext";
 import Modal from "react-bootstrap/Modal";
 import { Nav, NavDropdown } from "react-bootstrap";
@@ -51,23 +53,45 @@ export default function Navbar() {
     navigate("/sign-in");
   };
 
+  const navVariants = {
+    hidden: { y: -100 },
+    visible: { 
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: "easeOut"
+      }
+    }
+  };
+
   return (
     <>
-      <Nav
+      <motion.nav
         className="navbar fixed-top  navbar-expand-lg navbar-light bg-light"
         id="nav"
+        variants={navVariants}
+        initial="hidden"
+        animate="visible"
       >
         <div className="container-fluid">
           <Link to="/Farmer_homepage" className="site-title">
-            <CardMedia
-              component="img"
-              height="55"
-              image={Logo1}
-              alt="Career Insights"
-              className="mainlogo1"
-            />
-            <span style={{ color: "#228944" }}>G</span>
-            row <span style={{ color: "#228944" }}>&nbsp;F</span> arm
+            <motion.div 
+              className="logo-container"
+              whileHover={{ scale: 1.05 }}
+              transition={{ duration: 0.2 }}
+            >
+              <CardMedia
+                component="img"
+                height="55"
+                image={Logo1}
+                alt="SmartAgri"
+                className="mainlogo1"
+              />
+              <span className="logo-text">
+                <span style={{ color: "#228944" }}>Smart</span>
+                <span style={{ color: "#4CAF50" }}>Agri</span>
+              </span>
+            </motion.div>
           </Link>
           <button
             className="navbar-toggler"
@@ -118,12 +142,18 @@ export default function Navbar() {
               <>
                 <div>
                   <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                    <CustomLink to="/Myaccount">My Account</CustomLink>
-                    <CustomLink to="/ExpertTalk">Expert Talk</CustomLink>
-                    <CustomLink to="/Weatherdetails">
-                      Weather Details
+                    <CustomLink to="/Myaccount">
+                      <FaUser className="nav-icon" /> My Account
                     </CustomLink>
-                    <CustomLink to="/SchemesMain">Schemes</CustomLink>
+                    <CustomLink to="/ExpertTalk">
+                      <FaComments className="nav-icon" /> Expert Talk
+                    </CustomLink>
+                    <CustomLink to="/Weatherdetails">
+                      <FaCloudSun className="nav-icon" /> Weather
+                    </CustomLink>
+                    <CustomLink to="/SchemesMain">
+                      <FaListAlt className="nav-icon" /> Schemes
+                    </CustomLink>
                     <NavDropdown title="Smart Farming" id="basic-nav-dropdown">
                       <NavDropdown.Item>
                         {" "}
@@ -149,7 +179,7 @@ export default function Navbar() {
                       <BsBell style={{ height: "1.5em", width: "1.5em" }} />
                     </li> */}
                     <CustomLink onClick={logout} to="/sign-in">
-                      Logout
+                      <FaSignOutAlt className="nav-icon" /> Logout
                     </CustomLink>
                   </ul>
                 </div>
@@ -172,7 +202,7 @@ export default function Navbar() {
 
          
         </div>
-      </Nav>
+      </motion.nav>
 
       {show ? (
         <div>

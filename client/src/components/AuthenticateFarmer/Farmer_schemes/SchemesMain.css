@@ -1,3 +1,8 @@
+.tab-icon {
+  margin-right: 8px;
+  font-size: 1rem;
+}
+
 /* .Farmer_Tabs{
 
 } */
@@ -8,65 +13,96 @@
     flex-direction: column;
     text-align: left;
     margin-top: 95px;
-    
+    min-height: 100vh;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    padding: 20px;
 }
 
 .Mainin_Farmer_Schemes{
     width: 1350px;
+    max-width: 95vw;
     margin: auto;
     background: #ffffff;
-    box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
+    box-shadow: 0 25px 80px rgba(0, 0, 0, 0.1);
     padding: 40px 55px 45px 55px;
-    border-radius: 15px;
-    transition: all 0.3s;
+    border-radius: 20px;
+    transition: all 0.4s ease;
+    border: 1px solid rgba(76, 175, 80, 0.1);
+}
+
+.Mainin_Farmer_Schemes:hover {
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.15);
+  transform: translateY(-5px);
 }
 
 .modal-backdrop.show {
     opacity: 0.1 !important;
+    backdrop-filter: blur(5px);
 }
 
 table {
     border-collapse: collapse;
-    border-radius: 1em;
+    border-radius: 15px;
     overflow: hidden;
-    background-color: aliceblue;
-justify-content: center;
-  }
+    background-color: #f8f9fa;
+    justify-content: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+table:hover {
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+}
 
 tr th {
-    background-color: #9EFF9E !important;
-    font-weight: 500;
-    
+    background: linear-gradient(135deg, #4CAF50 0%, #66BB6A 100%) !important;
+    color: white !important;
+    font-weight: 600;
+    padding: 15px;
+    text-align: center;
 }
 
 
 tr:nth-child(odd) {
-    background-color: #ffffff57;
+    background-color: rgba(255, 255, 255, 0.8);
+    transition: background-color 0.3s ease;
   }
 
 tr:nth-child(even) {
-    background-color: #ffffff82;
+    background-color: rgba(248, 249, 250, 0.9);
+    transition: background-color 0.3s ease;
   }
+
+tbody tr:hover {
+  background-color: rgba(76, 175, 80, 0.1) !important;
+  transform: scale(1.01);
+  transition: all 0.3s ease;
+}
 
 
 table th {
     font-weight: 600;
+    border-bottom: 3px solid rgba(255, 255, 255, 0.3);
 }
 
 #F_model_Table tr th {
-    background-color: #9eff9ecb !important;
-    font-weight: 500 !important;
+    background: linear-gradient(135deg, #4CAF50 0%, #66BB6A 100%) !important;
+    color: white !important;
+    font-weight: 600 !important;
 }
 #F_model_Table  {
-    border-radius: 5px;
+    border-radius: 15px;
+    overflow: hidden;
 }
 #F_model_Table td  {
-    border: 1px solid #000000;
+    border: 1px solid #e9ecef;
+    padding: 12px;
 }
 #F_model_Table tr {
-    border: 1px solid #c5c5c5;
+    border: 1px solid #e9ecef;
 }
 #F_model_Table th {
-    border: 1px solid #747171;
+    border: 1px solid rgba(255, 255, 255, 0.3);
     width: 164px;
+    padding: 15px;
 }

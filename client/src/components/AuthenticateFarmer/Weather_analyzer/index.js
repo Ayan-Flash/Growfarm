@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import TopButtons from "./TopButtons";
 import Inputs from "./Inputs";
 import TimeAndLocation from "./TimeAndLocation";
@@ -40,24 +41,46 @@ console.log(data)
   };
 
   return (
-    <div
-      className={`mx-auto max-w-screen-md mt-4 py-5 px-32 bg-gradient-to-br  h-fit shadow-xl shadow-gray-400 ${formatBackground()}`}
+    <motion.div
+      className="weather-analyzer-container"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6 }}
     >
-      <TopButtons setQuery={setQuery} />
-      <Inputs setQuery={setQuery} units={units} setUnits={setUnits} />
+      <div className={`weather-widget ${formatBackground()}`}>
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2, duration: 0.6 }}
+        >
+          <TopButtons setQuery={setQuery} />
+        </motion.div>
+        
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.3, duration: 0.6 }}
+        >
+          <Inputs setQuery={setQuery} units={units} setUnits={setUnits} />
+        </motion.div>
 
-      {weather && (
-        <div>
-          <TimeAndLocation weather={weather} />
-          <TemperatureAndDetails weather={weather} />
+        {weather && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4, duration: 0.6 }}
+          >
+            <TimeAndLocation weather={weather} />
+            <TemperatureAndDetails weather={weather} />
 
-          <Forecast title="hourly forecast" items={weather.hourly} />
-          <Forecast title="daily forecast" items={weather.daily} />
-        </div>
-      )}
+            <Forecast title="hourly forecast" items={weather.hourly} />
+            <Forecast title="daily forecast" items={weather.daily} />
+          </motion.div>
+        )}
 
-      <ToastContainer autoClose={5000} theme="colored" newestOnTop={true} />
-    </div>
+        <ToastContainer autoClose={5000} theme="colored" newestOnTop={true} />
+      </div>
+    </motion.div>
   );
 }
 

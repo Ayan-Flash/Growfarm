@@ -1,4 +1,5 @@
 import React from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import Navbar from "./components/Navbar";
@@ -42,51 +43,58 @@ import Apmc from "./components/Admin/APMC/Apmc";
 function App() {
   return (
     <AppContext.Provider value={{ socket}}>
-    <Router>
-      <div className="App">
-        <Navbar />
-        <div>
-          <div >
-            <Routes>
-              <Route exact path="/" element={<Login />} />
-              <Route exact path="Farmer_homepage" element={<Farmer_homepage/>} />
-              <Route exact path="/sign-in" element={<Login />} />
-              <Route exact path="/adminlogin" element={<Adminlogin />} />
-              <Route exact path="/sign-up" element={<SignUp />} />
-              <Route exact path="/aftersignup" element={<Aftersignup />} />
-              <Route exact path="/Myaccount" element={<Myaccount />} />
-              <Route exact path="/Croprek" element={<Croprek />} />
-              <Route exact path="/Diseasepre" element={<Diseasepre />} />
-              <Route exact path="/Weatherdetails" element={<Weatherdetails />} />
-              <Route exact path="/schemes" element={<Schemes />} />
-              <Route exact path="/SchemesMain" element={<SchemesMain />} />
-              <Route exact path="/Approved" element={<Approved />} />
-              <Route exact path="/Applied" element={<Applied />} />
-              <Route exact path="/yieldfinder" element={<Yieldfinder />} />
-              <Route exact path="/Forgotpin" element={<Forgotpin/>}/>
-              <Route exact path="/findfarmer" element={<Findfarmer/>}/>
-              <Route exact path="/AddSchemes" element={<AddSchemes/>}/>
-              <Route exact path="/AdminSchemes" element={<AdminSchemes/>}/>
-              <Route exact path="/AnalysisMap" element={<AnalysisMap/>}/>
-              <Route exact path="/Dashboard" element={<Dashboard/>}/>
-              <Route exact path="/AdminSchemesMain" element={<AdminSchemesMain/>}/>
-              <Route exact path="/AdminAppliedSchemes" element={<AdminAppliedSchemes/>}/>
-              <Route exact path="/Notification" element={<Notification/>}/>
-              <Route exact path="/Expertlogin" element={<Expertlogin/>}/>
-              <Route exact path="/Expertregistration" element={<Expertregistration/>}/>
-              <Route exact path="/Traderlogin" element={<Traderlogin/>}/>
-              <Route exact path="/ExpertTalk" element={<ExpertTalk/>}/>
-              <Route exact path="/Yield_analysis" element={<Yield_analysis/>}/>
-              <Route exact path="/Irrigationanalysis" element={<Irrigationanalysis/>}/>
-              <Route exact path="/Soilanalysis" element={<Soilanalysis/>}/>
-              <Route exact path="/Trader_Accountpage" element={<Trader_Accountpage/>}/>
-              <Route exact path="/Genratebill" element={<Genratebill/>}/>
-              <Route exact path="/Apmc" element={<Apmc/>}/>
-            </Routes>
+      <Router>
+        <motion.div 
+          className="App"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+        >
+          <Navbar />
+          <div>
+            <div>
+              <AnimatePresence mode="wait">
+                <Routes>
+                  <Route exact path="/" element={<Login />} />
+                  <Route exact path="Farmer_homepage" element={<Farmer_homepage/>} />
+                  <Route exact path="/sign-in" element={<Login />} />
+                  <Route exact path="/adminlogin" element={<Adminlogin />} />
+                  <Route exact path="/sign-up" element={<SignUp />} />
+                  <Route exact path="/aftersignup" element={<Aftersignup />} />
+                  <Route exact path="/Myaccount" element={<Myaccount />} />
+                  <Route exact path="/Croprek" element={<Croprek />} />
+                  <Route exact path="/Diseasepre" element={<Diseasepre />} />
+                  <Route exact path="/Weatherdetails" element={<Weatherdetails />} />
+                  <Route exact path="/schemes" element={<Schemes />} />
+                  <Route exact path="/SchemesMain" element={<SchemesMain />} />
+                  <Route exact path="/Approved" element={<Approved />} />
+                  <Route exact path="/Applied" element={<Applied />} />
+                  <Route exact path="/yieldfinder" element={<Yieldfinder />} />
+                  <Route exact path="/Forgotpin" element={<Forgotpin/>}/>
+                  <Route exact path="/findfarmer" element={<Findfarmer/>}/>
+                  <Route exact path="/AddSchemes" element={<AddSchemes/>}/>
+                  <Route exact path="/AdminSchemes" element={<AdminSchemes/>}/>
+                  <Route exact path="/AnalysisMap" element={<AnalysisMap/>}/>
+                  <Route exact path="/Dashboard" element={<Dashboard/>}/>
+                  <Route exact path="/AdminSchemesMain" element={<AdminSchemesMain/>}/>
+                  <Route exact path="/AdminAppliedSchemes" element={<AdminAppliedSchemes/>}/>
+                  <Route exact path="/Notification" element={<Notification/>}/>
+                  <Route exact path="/Expertlogin" element={<Expertlogin/>}/>
+                  <Route exact path="/Expertregistration" element={<Expertregistration/>}/>
+                  <Route exact path="/Traderlogin" element={<Traderlogin/>}/>
+                  <Route exact path="/ExpertTalk" element={<ExpertTalk/>}/>
+                  <Route exact path="/Yield_analysis" element={<Yield_analysis/>}/>
+                  <Route exact path="/Irrigationanalysis" element={<Irrigationanalysis/>}/>
+                  <Route exact path="/Soilanalysis" element={<Soilanalysis/>}/>
+                  <Route exact path="/Trader_Accountpage" element={<Trader_Accountpage/>}/>
+                  <Route exact path="/Genratebill" element={<Genratebill/>}/>
+                  <Route exact path="/Apmc" element={<Apmc/>}/>
+                </Routes>
+              </AnimatePresence>
+            </div>
           </div>
-        </div>
-      </div>
-    </Router>
+        </motion.div>
+      </Router>
   </AppContext.Provider>
   );
 }
