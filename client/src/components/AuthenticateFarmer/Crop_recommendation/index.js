@@ -52,15 +52,31 @@ setIsLoading(true);
 setshowntop5(true)
 
   const getCropData = () => {
-     axios.get(`https://1a78-117-254-32-101.in.ngrok.io/Crop_Recommandation/%3Ccity%3E/%3Cint:N%3E/%3Cint:P%3E/%3Cint:K%3E/%3Cstring:Ph%3E/%3Cstring:rain%3E?city=${City}&N=${Nitrogen}&P=${Phosphorus}&K=${Potassium}&Ph=${Ph}&rain=${Rain}` , {withCredentials: true})
+     // Mock data for demo - replace with actual API call
+     setTimeout(() => {
+       const mockData = {
+         data: {
+           Top: [
+             { Crop: "Rice", Prob: 0.85, Requir_Nitro: 80, Require_Phosp: 40, Require_cal: 40, Requir_Ph: 5.5, Require_temp: 25, Require_humidity: 80, Require_rain: 150, User_temp: 26, User_humidity: 75, Fert: "Apply NPK fertilizer as recommended" },
+             { Crop: "Wheat", Prob: 0.78, Requir_Nitro: 120, Require_Phosp: 60, Require_cal: 40, Requir_Ph: 6.5, Require_temp: 20, Require_humidity: 60, Require_rain: 100, User_temp: 22, User_humidity: 65, Fert: "Use balanced fertilizer with micronutrients" },
+             { Crop: "Cotton", Prob: 0.72, Requir_Nitro: 100, Require_Phosp: 50, Require_cal: 50, Requir_Ph: 6.0, Require_temp: 28, Require_humidity: 70, Require_rain: 120, User_temp: 29, User_humidity: 68, Fert: "Apply potash-rich fertilizer" },
+             { Crop: "Sugarcane", Prob: 0.68, Requir_Nitro: 150, Require_Phosp: 80, Require_cal: 60, Requir_Ph: 6.2, Require_temp: 30, Require_humidity: 85, Require_rain: 200, User_temp: 31, User_humidity: 82, Fert: "High nitrogen fertilizer recommended" },
+             { Crop: "Maize", Prob: 0.65, Requir_Nitro: 90, Require_Phosp: 45, Require_cal: 35, Requir_Ph: 6.0, Require_temp: 24, Require_humidity: 65, Require_rain: 110, User_temp: 25, User_humidity: 63, Fert: "Balanced NPK with zinc supplementation" }
+           ]
+         }
+       };
+       setTop5data0(mockData.data.Top);
+       setIsLoading(false);
+     }, 2000);
+     
+     // Uncomment below for actual API call
+     // axios.get(`https://your-api-endpoint.com/Crop_Recommandation?city=${City}&N=${Nitrogen}&P=${Phosphorus}&K=${Potassium}&Ph=${Ph}&rain=${Rain}`)
     // .then((response) =>  response.json())
-      .then((data) => {
-const Crops = data.data.Top; 
-console.log(data.data.Top[0].Fert)
-        setTop5data0(Crops);
-        console.warn(Crops)
-        setIsLoading(false);
-      }); 
+     // .then((data) => {
+     //   const Crops = data.data.Top; 
+     //   setTop5data0(Crops);
+     //   setIsLoading(false);
+     // }); 
   };
   getCropData();
   }

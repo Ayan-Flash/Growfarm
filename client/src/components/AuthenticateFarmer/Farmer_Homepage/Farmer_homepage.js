@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import { Card, Button, Container, Row, Col } from 'react-bootstrap'
-import { FaSeedling, FaBug, FaCloudSun, FaUsers, FaChartLine, FaRobot } from 'react-icons/fa'
+import { FaSeedling, FaBug, FaCloudSun, FaUsers, FaChartLine, FaRobot, FaArrowRight, FaPlay } from 'react-icons/fa'
+import { Link } from 'react-router-dom'
 import "./Farmer_homepage.css"
 
 function Farmer_homepage() {
   const [currentSlide, setCurrentSlide] = useState(0)
+  const [isVisible, setIsVisible] = useState(false)
   const [stats, setStats] = useState({
     totalFarmers: 0,
     cropsRecommended: 0,
@@ -15,19 +17,22 @@ function Farmer_homepage() {
 
   const slides = [
     {
-      image: "imgs/slider1.jpeg",
+      image: "https://images.pexels.com/photos/2132227/pexels-photo-2132227.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080",
       title: "Smart Agriculture Revolution",
-      subtitle: "Empowering farmers with AI-driven insights and modern farming techniques"
+      subtitle: "Empowering farmers with AI-driven insights and modern farming techniques",
+      cta: "Start Your Journey"
     },
     {
-      image: "imgs/slider2.jpg", 
+      image: "https://images.pexels.com/photos/1595104/pexels-photo-1595104.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080", 
       title: "Precision Farming Solutions",
-      subtitle: "Optimize your crop yield with data-driven recommendations"
+      subtitle: "Optimize your crop yield with data-driven recommendations",
+      cta: "Explore Features"
     },
     {
-      image: "imgs/Overview.jpg",
+      image: "https://images.pexels.com/photos/1595108/pexels-photo-1595108.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080",
       title: "Sustainable Future",
-      subtitle: "Building a sustainable agricultural ecosystem for tomorrow"
+      subtitle: "Building a sustainable agricultural ecosystem for tomorrow",
+      cta: "Join Community"
     }
   ]
 
@@ -36,47 +41,76 @@ function Farmer_homepage() {
       icon: <FaSeedling />,
       title: "Crop Recommendation & Yield Prediction",
       description: "Get AI-powered crop recommendations based on soil conditions, weather patterns, and historical data to maximize your yield potential.",
-      image: "imgs/Crop Recommendation.jpg",
-      color: "#4CAF50"
+      image: "https://images.pexels.com/photos/1595104/pexels-photo-1595104.jpeg?auto=compress&cs=tinysrgb&w=800",
+      color: "#4CAF50",
+      link: "/Croprek"
     },
     {
       icon: <FaBug />,
       title: "Disease Detection",
       description: "Upload photos of your crops to instantly identify diseases and receive treatment recommendations from our advanced ML models.",
-      image: "imgs/Disease Prediction.jpg",
-      color: "#FF5722"
+      image: "https://images.pexels.com/photos/1459505/pexels-photo-1459505.jpeg?auto=compress&cs=tinysrgb&w=800",
+      color: "#FF5722",
+      link: "/Diseasepre"
     },
     {
       icon: <FaCloudSun />,
       title: "Weather Analytics",
       description: "Stay ahead with real-time weather forecasts, alerts, and climate insights tailored for your farming operations.",
-      image: "imgs/Weather1.jpg",
-      color: "#2196F3"
+      image: "https://images.pexels.com/photos/1118873/pexels-photo-1118873.jpeg?auto=compress&cs=tinysrgb&w=800",
+      color: "#2196F3",
+      link: "/Weatherdetails"
     },
     {
       icon: <FaUsers />,
       title: "Expert Consultation",
       description: "Connect with agricultural experts for personalized advice and solutions to your farming challenges.",
-      image: "imgs/Expert talk.png",
-      color: "#9C27B0"
+      image: "https://images.pexels.com/photos/1595108/pexels-photo-1595108.jpeg?auto=compress&cs=tinysrgb&w=800",
+      color: "#9C27B0",
+      link: "/ExpertTalk"
     },
     {
       icon: <FaChartLine />,
       title: "Scheme Management",
       description: "Discover and apply for government schemes and subsidies designed to support modern farming practices.",
-      image: "imgs/Alert And Update System.jpg",
-      color: "#FF9800"
+      image: "https://images.pexels.com/photos/2132227/pexels-photo-2132227.jpeg?auto=compress&cs=tinysrgb&w=800",
+      color: "#FF9800",
+      link: "/SchemesMain"
     },
     {
       icon: <FaRobot />,
       title: "AI Assistant",
       description: "Get instant answers to your farming questions with our intelligent chatbot available 24/7.",
-      image: "imgs/Chatbot Grow.jpg",
-      color: "#607D8B"
+      image: "https://images.pexels.com/photos/1595108/pexels-photo-1595108.jpeg?auto=compress&cs=tinysrgb&w=800",
+      color: "#607D8B",
+      link: "/ExpertTalk"
+    }
+  ]
+
+  const testimonials = [
+    {
+      name: "Ramesh Patel",
+      location: "Kheda District",
+      text: "SmartAgri helped me increase my crop yield by 40% with their AI recommendations!",
+      rating: 5
+    },
+    {
+      name: "Priya Shah", 
+      location: "Rajkot District",
+      text: "The disease detection feature saved my entire cotton crop. Amazing technology!",
+      rating: 5
+    },
+    {
+      name: "Vikram Singh",
+      location: "Ahmedabad District", 
+      text: "Weather alerts helped me protect my crops from unexpected rainfall. Highly recommended!",
+      rating: 5
     }
   ]
 
   useEffect(() => {
+    setIsVisible(true)
+    
     // Animate stats counter
     const animateStats = () => {
       const targets = { totalFarmers: 15420, cropsRecommended: 8750, diseasesDetected: 3240, weatherAlerts: 12680 }
@@ -109,80 +143,148 @@ function Farmer_homepage() {
   useEffect(() => {
     const slideTimer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length)
-    }, 5000)
+    }, 6000)
 
     return () => clearInterval(slideTimer)
-  }, [])
+  }, [slides.length])
 
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1
+        staggerChildren: 0.1,
+        delayChildren: 0.3
       }
     }
   }
 
   const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
+    hidden: { y: 30, opacity: 0 },
     visible: {
       y: 0,
       opacity: 1,
       transition: {
-        duration: 0.6
+        duration: 0.6,
+        ease: "easeOut"
       }
     }
   }
 
+  const slideVariants = {
+    enter: (direction) => ({
+      x: direction > 0 ? 1000 : -1000,
+      opacity: 0
+    }),
+    center: {
+      zIndex: 1,
+      x: 0,
+      opacity: 1
+    },
+    exit: (direction) => ({
+      zIndex: 0,
+      x: direction < 0 ? 1000 : -1000,
+      opacity: 0
+    })
+  }
+
   return (
-    <>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: isVisible ? 1 : 0 }}
+      transition={{ duration: 0.8 }}
+    >
       {/* Enhanced Hero Carousel */}
       <div className="hero-carousel">
-        <div className="carousel-container">
-          {slides.map((slide, index) => (
-            <motion.div
-              key={index}
-              className={`carousel-slide ${index === currentSlide ? 'active' : ''}`}
-              initial={{ opacity: 0, scale: 1.1 }}
-              animate={{ 
-                opacity: index === currentSlide ? 1 : 0,
-                scale: index === currentSlide ? 1 : 1.1
-              }}
-              transition={{ duration: 1 }}
-            >
-              <img src={slide.image} alt={slide.title} />
-              <div className="carousel-overlay">
-                <motion.div 
-                  className="carousel-content"
-                  initial={{ y: 50, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: 0.5, duration: 0.8 }}
+        <AnimatePresence mode="wait" custom={currentSlide}>
+          <motion.div
+            key={currentSlide}
+            custom={currentSlide}
+            variants={slideVariants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            transition={{
+              x: { type: "spring", stiffness: 300, damping: 30 },
+              opacity: { duration: 0.5 }
+            }}
+            className="carousel-slide active"
+          >
+            <div 
+              className="carousel-background"
+              style={{ backgroundImage: `url(${slides[currentSlide].image})` }}
+            />
+            <div className="carousel-overlay">
+              <motion.div 
+                className="carousel-content"
+                initial={{ y: 50, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.5, duration: 0.8 }}
+              >
+                <motion.h1
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ delay: 0.7, duration: 0.6 }}
                 >
-                  <h1>{slide.title}</h1>
-                  <p>{slide.subtitle}</p>
-                  <Button variant="success" size="lg" className="cta-button">
-                    Get Started
-                  </Button>
+                  {slides[currentSlide].title}
+                </motion.h1>
+                <motion.p
+                  initial={{ y: 20, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ delay: 0.9, duration: 0.6 }}
+                >
+                  {slides[currentSlide].subtitle}
+                </motion.p>
+                <motion.div
+                  initial={{ y: 20, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ delay: 1.1, duration: 0.6 }}
+                >
+                  <Link to="/Myaccount">
+                    <Button variant="success" size="lg" className="cta-button">
+                      <FaPlay className="me-2" />
+                      {slides[currentSlide].cta}
+                    </Button>
+                  </Link>
                 </motion.div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
+              </motion.div>
+            </div>
+          </motion.div>
+        </AnimatePresence>
         
-        {/* Carousel Indicators */}
+        {/* Enhanced Carousel Indicators */}
         <div className="carousel-indicators">
           {slides.map((_, index) => (
-            <button
+            <motion.button
               key={index}
               className={`indicator ${index === currentSlide ? 'active' : ''}`}
               onClick={() => setCurrentSlide(index)}
+              whileHover={{ scale: 1.2 }}
+              whileTap={{ scale: 0.9 }}
             />
           ))}
         </div>
+
+        {/* Floating Navigation Arrows */}
+        <motion.button 
+          className="carousel-nav prev"
+          onClick={() => setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length)}
+          whileHover={{ scale: 1.1, x: -5 }}
+          whileTap={{ scale: 0.9 }}
+        >
+          ‹
+        </motion.button>
+        <motion.button 
+          className="carousel-nav next"
+          onClick={() => setCurrentSlide((prev) => (prev + 1) % slides.length)}
+          whileHover={{ scale: 1.1, x: 5 }}
+          whileTap={{ scale: 0.9 }}
+        >
+          ›
+        </motion.button>
       </div>
 
-      {/* Stats Section */}
+      {/* Animated Stats Section */}
       <motion.section 
         className="stats-section"
         initial={{ opacity: 0, y: 50 }}
@@ -191,32 +293,73 @@ function Farmer_homepage() {
         viewport={{ once: true }}
       >
         <Container>
-          <Row>
-            <Col md={3}>
-              <div className="stat-card">
-                <h3>{stats.totalFarmers.toLocaleString()}</h3>
-                <p>Registered Farmers</p>
+          <motion.div 
+            className="stats-grid"
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+          >
+            <motion.div className="stat-card" variants={itemVariants}>
+              <motion.h3
+                initial={{ scale: 0 }}
+                whileInView={{ scale: 1 }}
+                transition={{ delay: 0.5, type: "spring", stiffness: 200 }}
+                viewport={{ once: true }}
+              >
+                {stats.totalFarmers.toLocaleString()}+
+              </motion.h3>
+              <p>Registered Farmers</p>
+              <div className="stat-icon">
+                <FaUsers />
               </div>
-            </Col>
-            <Col md={3}>
-              <div className="stat-card">
-                <h3>{stats.cropsRecommended.toLocaleString()}</h3>
-                <p>Crops Recommended</p>
+            </motion.div>
+            
+            <motion.div className="stat-card" variants={itemVariants}>
+              <motion.h3
+                initial={{ scale: 0 }}
+                whileInView={{ scale: 1 }}
+                transition={{ delay: 0.7, type: "spring", stiffness: 200 }}
+                viewport={{ once: true }}
+              >
+                {stats.cropsRecommended.toLocaleString()}+
+              </motion.h3>
+              <p>Crops Recommended</p>
+              <div className="stat-icon">
+                <FaSeedling />
               </div>
-            </Col>
-            <Col md={3}>
-              <div className="stat-card">
-                <h3>{stats.diseasesDetected.toLocaleString()}</h3>
-                <p>Diseases Detected</p>
+            </motion.div>
+            
+            <motion.div className="stat-card" variants={itemVariants}>
+              <motion.h3
+                initial={{ scale: 0 }}
+                whileInView={{ scale: 1 }}
+                transition={{ delay: 0.9, type: "spring", stiffness: 200 }}
+                viewport={{ once: true }}
+              >
+                {stats.diseasesDetected.toLocaleString()}+
+              </motion.h3>
+              <p>Diseases Detected</p>
+              <div className="stat-icon">
+                <FaBug />
               </div>
-            </Col>
-            <Col md={3}>
-              <div className="stat-card">
-                <h3>{stats.weatherAlerts.toLocaleString()}</h3>
-                <p>Weather Alerts Sent</p>
+            </motion.div>
+            
+            <motion.div className="stat-card" variants={itemVariants}>
+              <motion.h3
+                initial={{ scale: 0 }}
+                whileInView={{ scale: 1 }}
+                transition={{ delay: 1.1, type: "spring", stiffness: 200 }}
+                viewport={{ once: true }}
+              >
+                {stats.weatherAlerts.toLocaleString()}+
+              </motion.h3>
+              <p>Weather Alerts Sent</p>
+              <div className="stat-icon">
+                <FaCloudSun />
               </div>
-            </Col>
-          </Row>
+            </motion.div>
+          </motion.div>
         </Container>
       </motion.section>
 
@@ -237,26 +380,42 @@ function Farmer_homepage() {
           <Row>
             {features.map((feature, index) => (
               <Col lg={4} md={6} key={index}>
-                <motion.div variants={itemVariants}>
-                  <Card className="feature-card" style={{ '--accent-color': feature.color }}>
+                <motion.div 
+                  variants={itemVariants}
+                  whileHover={{ y: -10 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <Card className="feature-card">
                     <div className="feature-image">
                       <img src={feature.image} alt={feature.title} />
                       <div className="feature-overlay">
-                        <div className="feature-icon" style={{ color: feature.color }}>
+                        <motion.div 
+                          className="feature-icon" 
+                          style={{ color: feature.color }}
+                          whileHover={{ scale: 1.2, rotate: 10 }}
+                          transition={{ duration: 0.3 }}
+                        >
                           {feature.icon}
-                        </div>
+                        </motion.div>
                       </div>
                     </div>
                     <Card.Body>
                       <Card.Title>{feature.title}</Card.Title>
                       <Card.Text>{feature.description}</Card.Text>
-                      <Button 
-                        variant="outline-success" 
-                        className="feature-btn"
-                        style={{ borderColor: feature.color, color: feature.color }}
-                      >
-                        Learn More
-                      </Button>
+                      <Link to={feature.link}>
+                        <motion.div
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                        >
+                          <Button 
+                            variant="outline-success" 
+                            className="feature-btn"
+                            style={{ borderColor: feature.color, color: feature.color }}
+                          >
+                            Explore <FaArrowRight className="ms-2" />
+                          </Button>
+                        </motion.div>
+                      </Link>
                     </Card.Body>
                   </Card>
                 </motion.div>
@@ -290,17 +449,36 @@ function Farmer_homepage() {
                   This centralized system enables government agencies and policymakers to implement 
                   targeted programs and subsidies effectively.
                 </p>
-                <ul className="feature-list">
-                  <li>✓ Centralized farmer database</li>
-                  <li>✓ AI-powered recommendations</li>
-                  <li>✓ Real-time weather alerts</li>
-                  <li>✓ Disease detection system</li>
-                  <li>✓ Government scheme integration</li>
-                  <li>✓ Digital contract farming</li>
-                </ul>
-                <Button variant="success" size="lg" className="mt-3">
-                  Join Platform
-                </Button>
+                <motion.ul className="feature-list">
+                  {[
+                    "Centralized farmer database",
+                    "AI-powered recommendations", 
+                    "Real-time weather alerts",
+                    "Disease detection system",
+                    "Government scheme integration",
+                    "Digital contract farming"
+                  ].map((item, index) => (
+                    <motion.li
+                      key={index}
+                      initial={{ x: -20, opacity: 0 }}
+                      whileInView={{ x: 0, opacity: 1 }}
+                      transition={{ delay: index * 0.1, duration: 0.5 }}
+                      viewport={{ once: true }}
+                    >
+                      ✓ {item}
+                    </motion.li>
+                  ))}
+                </motion.ul>
+                <Link to="/sign-up">
+                  <motion.div
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <Button variant="success" size="lg" className="mt-3">
+                      Join Platform
+                    </Button>
+                  </motion.div>
+                </Link>
               </motion.div>
             </Col>
             <Col lg={6}>
@@ -312,18 +490,53 @@ function Farmer_homepage() {
                 className="overview-visual"
               >
                 <div className="floating-cards">
-                  <div className="floating-card card-1">
+                  <motion.div 
+                    className="floating-card card-1"
+                    animate={{ 
+                      y: [0, -20, 0],
+                      rotate: [0, 5, 0]
+                    }}
+                    transition={{ 
+                      duration: 4,
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }}
+                  >
                     <FaSeedling />
                     <span>Smart Farming</span>
-                  </div>
-                  <div className="floating-card card-2">
+                  </motion.div>
+                  <motion.div 
+                    className="floating-card card-2"
+                    animate={{ 
+                      y: [0, -15, 0],
+                      rotate: [0, -3, 0]
+                    }}
+                    transition={{ 
+                      duration: 3.5,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                      delay: 1
+                    }}
+                  >
                     <FaChartLine />
                     <span>Analytics</span>
-                  </div>
-                  <div className="floating-card card-3">
+                  </motion.div>
+                  <motion.div 
+                    className="floating-card card-3"
+                    animate={{ 
+                      y: [0, -25, 0],
+                      rotate: [0, 4, 0]
+                    }}
+                    transition={{ 
+                      duration: 4.5,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                      delay: 2
+                    }}
+                  >
                     <FaCloudSun />
                     <span>Weather</span>
-                  </div>
+                  </motion.div>
                 </div>
               </motion.div>
             </Col>
@@ -331,7 +544,7 @@ function Farmer_homepage() {
         </Container>
       </motion.section>
 
-      {/* New Testimonials Section */}
+      {/* Enhanced Testimonials Section */}
       <motion.section 
         className="testimonials-section"
         initial={{ opacity: 0 }}
@@ -340,58 +553,54 @@ function Farmer_homepage() {
         viewport={{ once: true }}
       >
         <Container>
-          <h2 className="text-center mb-5">What Farmers Say</h2>
+          <motion.h2 
+            className="text-center mb-5"
+            initial={{ y: -30, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+          >
+            What Farmers Say About Us
+          </motion.h2>
           <Row>
-            <Col md={4}>
-              <motion.div 
-                className="testimonial-card"
-                whileHover={{ y: -10 }}
-                transition={{ duration: 0.3 }}
-              >
-                <div className="testimonial-content">
-                  <p>"SmartAgri helped me increase my crop yield by 40% with their AI recommendations!"</p>
-                  <div className="testimonial-author">
-                    <strong>Ramesh Patel</strong>
-                    <span>Kheda District</span>
+            {testimonials.map((testimonial, index) => (
+              <Col md={4} key={index}>
+                <motion.div 
+                  className="testimonial-card"
+                  initial={{ y: 50, opacity: 0 }}
+                  whileInView={{ y: 0, opacity: 1 }}
+                  transition={{ delay: index * 0.2, duration: 0.6 }}
+                  whileHover={{ y: -10, scale: 1.02 }}
+                  viewport={{ once: true }}
+                >
+                  <div className="testimonial-content">
+                    <div className="stars">
+                      {[...Array(testimonial.rating)].map((_, i) => (
+                        <motion.span
+                          key={i}
+                          initial={{ opacity: 0, scale: 0 }}
+                          whileInView={{ opacity: 1, scale: 1 }}
+                          transition={{ delay: index * 0.2 + i * 0.1, duration: 0.3 }}
+                          viewport={{ once: true }}
+                        >
+                          ⭐
+                        </motion.span>
+                      ))}
+                    </div>
+                    <p>"{testimonial.text}"</p>
+                    <div className="testimonial-author">
+                      <strong>{testimonial.name}</strong>
+                      <span>{testimonial.location}</span>
+                    </div>
                   </div>
-                </div>
-              </motion.div>
-            </Col>
-            <Col md={4}>
-              <motion.div 
-                className="testimonial-card"
-                whileHover={{ y: -10 }}
-                transition={{ duration: 0.3 }}
-              >
-                <div className="testimonial-content">
-                  <p>"The disease detection feature saved my entire cotton crop. Amazing technology!"</p>
-                  <div className="testimonial-author">
-                    <strong>Priya Shah</strong>
-                    <span>Rajkot District</span>
-                  </div>
-                </div>
-              </motion.div>
-            </Col>
-            <Col md={4}>
-              <motion.div 
-                className="testimonial-card"
-                whileHover={{ y: -10 }}
-                transition={{ duration: 0.3 }}
-              >
-                <div className="testimonial-content">
-                  <p>"Weather alerts helped me protect my crops from unexpected rainfall. Highly recommended!"</p>
-                  <div className="testimonial-author">
-                    <strong>Vikram Singh</strong>
-                    <span>Ahmedabad District</span>
-                  </div>
-                </div>
-              </motion.div>
-            </Col>
+                </motion.div>
+              </Col>
+            ))}
           </Row>
         </Container>
       </motion.section>
 
-      {/* Call to Action Section */}
+      {/* Enhanced Call to Action Section */}
       <motion.section 
         className="cta-section"
         initial={{ opacity: 0, scale: 0.9 }}
@@ -400,21 +609,54 @@ function Farmer_homepage() {
         viewport={{ once: true }}
       >
         <Container>
-          <div className="cta-content">
+          <motion.div 
+            className="cta-content"
+            initial={{ y: 30, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+          >
             <h2>Ready to Transform Your Farming?</h2>
             <p>Join thousands of farmers who are already benefiting from our smart agriculture platform</p>
             <div className="cta-buttons">
-              <Button variant="success" size="lg" className="me-3">
-                Start Free Trial
-              </Button>
-              <Button variant="outline-light" size="lg">
-                Watch Demo
-              </Button>
+              <Link to="/sign-up">
+                <motion.div
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <Button variant="success" size="lg" className="me-3">
+                    <FaSeedling className="me-2" />
+                    Start Free Trial
+                  </Button>
+                </motion.div>
+              </Link>
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Button variant="outline-light" size="lg">
+                  <FaPlay className="me-2" />
+                  Watch Demo
+                </Button>
+              </motion.div>
             </div>
-          </div>
+          </motion.div>
         </Container>
       </motion.section>
-    </>
+
+      {/* Scroll to Top Button */}
+      <motion.button
+        className="scroll-to-top"
+        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+        initial={{ opacity: 0, scale: 0 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.9 }}
+        viewport={{ once: true }}
+      >
+        ↑
+      </motion.button>
+    </motion.div>
   )
 }
 

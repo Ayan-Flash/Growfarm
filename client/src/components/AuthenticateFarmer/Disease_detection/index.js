@@ -29,16 +29,26 @@ class App extends Component {
     console.log(this.state.selectedFile);
     console.log(this.state.selectedFile.name);
 
-    const promise = axios.post("http://localhost:5000/Crop_Diseas", formData);
-    promise.then((data) => {
-      this.setState({ Diseas: data.data });
-      this.setState({ Sugestions: data.data.Suggestions });
-      this.setState({ data: true });
-      console.log(data);
-      console.log(data.data);
-      // console.log(data.data.Diseas)
-      // console.log(data.data.Suggestions)
-    });
+    // Mock data for demo - replace with actual API call
+    setTimeout(() => {
+      const mockResponse = {
+        Crop: "Tomato",
+        Diseas: "Early Blight",
+        Cause: "Fungal infection caused by Alternaria solani, favored by warm, humid conditions",
+        Sugession: "1. Remove affected leaves immediately\n2. Apply copper-based fungicide\n3. Improve air circulation\n4. Avoid overhead watering\n5. Use disease-resistant varieties"
+      };
+      this.setState({ 
+        Diseas: mockResponse,
+        data: true 
+      });
+    }, 2000);
+
+    // Uncomment below for actual API call
+    // const promise = axios.post("http://localhost:5000/Crop_Diseas", formData);
+    // promise.then((data) => {
+    //   this.setState({ Diseas: data.data });
+    //   this.setState({ data: true });
+    // });
 
     console.warn(this.state.Diseas);
     console.warn(formData);

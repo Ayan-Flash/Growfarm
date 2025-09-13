@@ -50,16 +50,26 @@ setshowntop5(true)
 
   const getCropData = () => {
 
-    axios.get(`https://1a78-117-254-32-101.in.ngrok.io/Crop_Yield/%3Cdist%3E/%3Cseason%3E/%3Ccrop%3E/%3Cint:area%3E/%3Cint:N%3E/%3Cint:P%3E/%3Cint:K%3E/%3Cstring:Ph%3E?dist=${City}&season=${season}&crop=${Crop}&area=${Area}&N=${Nitrogen}&P=${Phosphorus}&K=${Potassium}&Ph=${Ph}` , {withCredentials: true})
-    .then(response => {
-      console.log(response.data);
-      setProduction(response.data.Production)
-      setYield(response.data.Yield)
-      setshowntop5(true)
-    })
-    .catch(error => {
-      console.log(error);
-    });
+    // Mock data for demo - replace with actual API call
+    setTimeout(() => {
+      const mockYield = Math.floor(Math.random() * 50) + 20; // Random yield between 20-70
+      const mockProduction = Area * mockYield;
+      
+      setProduction(mockProduction);
+      setYield(mockYield);
+      setshowntop5(true);
+    }, 1500);
+
+    // Uncomment below for actual API call
+    // axios.get(`https://your-api-endpoint.com/Crop_Yield?dist=${City}&season=${season}&crop=${Crop}&area=${Area}&N=${Nitrogen}&P=${Phosphorus}&K=${Potassium}&Ph=${Ph}`)
+    // .then(response => {
+    //   setProduction(response.data.Production)
+    //   setYield(response.data.Yield)
+    //   setshowntop5(true)
+    // })
+    // .catch(error => {
+    //   console.log(error);
+    // });
 
 //      fetch(`https://0909-2402-8100-27d0-f428-b47c-e4e3-c607-7036.in.ngrok.io/Crop_Yield/%3Cdist%3E/%3Cseason%3E/%3Ccrop%3E/%3Cint:area%3E/%3Cint:N%3E/%3Cint:P%3E/%3Cint:K%3E/%3Cstring:Ph%3E?dist=${City}&season=${season}&crop=${Crop}&area=${Area}&N=${Nitrogen}&P=${Phosphorus}&K=${Potassium}&Ph=${Ph}`)
 //     .then((response) =>  response.json())
