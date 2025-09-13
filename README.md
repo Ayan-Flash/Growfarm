@@ -37,20 +37,20 @@ The portal was built to address the challenges faced by farmers in accessing cru
 | ![Dialogflow](https://img.shields.io/badge/Dialogflow-FF9800?style=for-the-badge&logo=dialogflow&logoColor=white) | Conversational AI & chatbot framework |
 | ![Twilio API](https://img.shields.io/badge/Twilio-F22F46?style=for-the-badge&logo=twilio&logoColor=white) | SMS & communication integration |
 
-### 📱 Android Technology Stack
+### 📱 Android Technology Stack
 
-| 🛠️ Technology | 📋 Purpose in the Farmer‑Portal App |
+| 🛠️ Technology | 📋 Purpose in the Farmer‑Portal App |
 |---------------|------------------------------------|
 | ⚡ **Kotlin** | Modern, null‑safe language powering the whole app |
-| 🎨 **Jetpack Compose + Material 3** | Declarative UI & sleek components for every screen |
-| 🧭 **Navigation Compose** | Smooth, type‑safe in‑app routing (Home → Weather → Chatbot …) |
-| 📊 **ViewModel + StateFlow** | Lifecycle‑aware reactive state management |
-| 🌐 **Retrofit 2 & OkHttp 5** | Type‑safe REST client for all backend services |
-| 🔄 **Coroutines + WorkManager** | Lightweight async ops & scheduled alerts (weather, schemes) |
+| 🎨 **Jetpack Compose + Material 3** | Declarative UI & sleek components for every screen |
+| 🧭 **Navigation Compose** | Smooth, type‑safe in‑app routing (Home → Weather → Chatbot …) |
+| 📊 **ViewModel + StateFlow** | Lifecycle‑aware reactive state management |
+| 🌐 **Retrofit 2 & OkHttp 5** | Type‑safe REST client for all backend services |
+| 🔄 **Coroutines + WorkManager** | Lightweight async ops & scheduled alerts (weather, schemes) |
 | 💾 **Room** | Local caching of APMC prices, schemes & offline data |
 | 🔗 **Hilt** | Dependency injection for singletons, repositories, ViewModels |
-| 🔔 **Firebase Cloud Messaging** | Push notifications for subsidy & weather alerts |
-| 🤖 **TensorFlow Lite** | On‑device crop‑disease detection & yield inference |
+| 🔔 **Firebase Cloud Messaging** | Push notifications for subsidy & weather alerts |
+| 🤖 **TensorFlow Lite** | On‑device crop‑disease detection & yield inference |
 
 ---
 
@@ -86,6 +86,118 @@ npm start
 cd fastapi-server
 pip install -r requirements.txt
 uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+```
+
+## 🚀 Quick‑Start (Linux / macOS / Windows)
+
+1. **Prerequisites**
+   * **Node.js 18+** and **npm**
+   * **Android Studio** (for mobile app development)
+   * **Python 3.9+** (for ML FastAPI server)
+   * **MongoDB** (for database)
+
+2. **Clone & Setup**
+   ```bash
+   git clone https://github.com/your-user/Growfarm-Digital-farmer-portal.git
+   cd Growfarm-Digital-farmer-portal
+   ```
+
+3. **Start Web Client (Vite)**
+   ```bash
+   cd client
+   npm install
+   npm run dev
+   ```
+
+4. **Start Backend Server**
+   ```bash
+   cd server
+   npm install
+   npm start
+   ```
+
+5. **Start ML FastAPI Server**
+   ```bash
+   cd "ML FAST API"
+   pip install -r requirements.txt
+   uvicorn main:app --reload
+   ```
+
+6. **Access the Application**
+   * Web Client: `http://localhost:5173`
+   * Backend API: `http://localhost:8000`
+   * ML API: `http://localhost:8000` (FastAPI)
+
+7. **Login** with your credentials → explore:
+   * Crop Recommendation  
+   * Disease Detection
+   * Weather Analyzer  
+   * Scheme Management
+   * Expert Consultation
+
+## 🖼 Technology Stack
+
+### Web Application (Vite + React)
+| Technology | Purpose |
+|------------|---------|
+| **Vite** | Ultra-fast build tool and dev server |
+| **React 18** | Modern UI framework with concurrent features |
+| **Framer Motion** | Smooth animations and transitions |
+| **Bootstrap 5** | Responsive design system |
+| **React Router** | Client-side routing |
+
+### Android Application (Kotlin + Jetpack Compose)
+| Technology | Purpose |
+|------------|---------|
+| **Kotlin** | Modern Android development |
+| **Jetpack Compose** | Declarative UI framework |
+| **Material 3** | Modern design system |
+| **Retrofit** | HTTP client for API calls |
+
+### Backend Services
+| Technology | Purpose |
+|------------|---------|
+| **Node.js + Express** | REST API server |
+| **FastAPI** | ML model serving |
+| **MongoDB** | Database storage |
+| **Socket.io** | Real-time communication |
+
+## 🎨 New Features Added
+
+### ⚡ Performance Improvements
+- **Vite Build System**: 10x faster builds and HMR
+- **Optimized Bundle Size**: Tree-shaking and code splitting
+- **Modern ES Modules**: Better browser compatibility
+
+### 🎭 Enhanced Animations
+- **Framer Motion Integration**: Smooth page transitions
+- **Micro-interactions**: Hover effects and button animations
+- **Loading States**: Professional loading animations
+- **Scroll Animations**: Elements animate on scroll
+
+### 🎨 Modern UI/UX
+- **Glassmorphism Design**: Modern glass-like effects
+- **Gradient Backgrounds**: Beautiful color transitions
+- **Enhanced Typography**: Better readability and hierarchy
+- **Responsive Grid System**: Mobile-first design
+
+### 🚀 New Components
+- **Hero Carousel**: Animated image slider with navigation
+- **Statistics Counter**: Animated number counting
+- **Testimonials Section**: User feedback with ratings
+- **Floating Action Buttons**: Quick access to features
+- **Enhanced Cards**: 3D hover effects and overlays
+
+## 🔧 Development Commands
+
+```bash
+# Development
+npm run dev          # Start Vite dev server
+npm run build        # Build for production
+npm run preview      # Preview production build
+
+# Legacy support
+npm start           # Alias for npm run dev
 ```
 
 ## 🚜 Key Features of Growfarm  
@@ -154,11 +266,11 @@ uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 
 ## 💻 Interface design of farmer portal:
 
-### Farmer’s registration form
+### Farmer's registration form
 
 ![Registration](https://user-images.githubusercontent.com/83646676/227987002-147bcf12-5d1a-431a-bad8-9f1df7049864.png)
 
-###  Farmer’s profile page
+###  Farmer's profile page
 
 ![FPP](https://user-images.githubusercontent.com/83646676/227987187-29cc2ca0-8526-45dd-bb5e-085bd5932287.png)
 
@@ -234,5 +346,6 @@ https://user-images.githubusercontent.com/83646676/227994536-026f6a4b-ffc6-406e-
 
 https://user-images.githubusercontent.com/83646676/227994553-cc59698a-cd75-4ec5-bd1f-5e0456d3a210.mp4
 
+---
 
-
+Made with ❤️ & ☕ using modern web technologies.
