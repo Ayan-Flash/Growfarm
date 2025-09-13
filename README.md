@@ -63,7 +63,6 @@ That's pretty easy. To ensure that you are able to install everything properly, 
 ```sh
 git clone https://github.com/Neelpatel11/Growfarm-Digital-farmer-portal.git
 cd Growfarm-Digital-farmer-portal
-npm run install
 ```
 Now we will add the environment variables in the client/ and server/
 
